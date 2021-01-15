@@ -1,41 +1,22 @@
-function createElement(type, props, ...children) {
-  return {
-    type,
-    props: {
-      ...props,
-      children: children.map((child) => (typeof child === "object" ? child : createTextElement(child))),
-    },
-  };
-}
+// const element = <h1 title="foo">Hello</h1>;
+// const container = document.getElementById("root");
+// ReactDOM.render(element, container);
 
-function createTextElement(text) {
-  return {
-    type: "TEXT_ELEMENT",
-    props: {
-      nodeValue: text,
-      children: [],
-    },
-  };
+const element = {
+  type: "h1",
+  props: {
+    title: "foo",
+    children: "Hello",
+  },
 }
-function render(params, container) {
-  const dom = element.type == "TEXT_ELEMENT" ? document.createTextNode("") : document.createElement(element.type);
-  params.props.children.map((item) => {
-    return render(item, dom);
-  });
-  container.appendChild(dom);
-}
-const zreact = {
-  createElement,
-};
-const zreactDom = {
-  render,
-};
-
-const element = zreact.createElement(
-  "div",
-  { id: "foo" },
-  zreact.createElement("a", null, "bar"),
-  zreact.createElement("b")
-);
-const container = document.getElementById("root");
-zreactDom.render(element, container);
+​
+const container = document.getElementById("root")
+​
+const node = document.createElement(element.type)
+node["title"] = element.props.title
+​
+const text = document.createTextNode("")
+text["nodeValue"] = element.props.children
+​
+node.appendChild(text)
+container.appendChild(node)
